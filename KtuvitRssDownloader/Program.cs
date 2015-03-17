@@ -23,11 +23,10 @@ namespace KtuvitRssDownloader
                 if(item.HasExtensions)
                 {
                     var content = item.Extensions.Where(i=>i.XmlPrefix=="content").First();
-                    //Console.WriteLine(string.Format("content:{0}",content ));
                     var pos1 = content.ToString().IndexOf(@";m=subtitles#");
                     var pos2 = content.ToString().IndexOf(@"""", pos1);
                     var id = content.ToString().Substring(pos1 + @";m=subtitles#".Length, pos2 - pos1 - @";m=subtitles#".Length);
-                    Console.WriteLine(string.Format("id of subtitle:{0}", id));
+                    Console.WriteLine(string.Format("ID of subtitle:{0}", id));
                     Console.WriteLine("-----------------------"); 
                 }
                 
