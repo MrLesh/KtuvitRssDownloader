@@ -28,7 +28,7 @@ namespace KtuvitRssDownloader
                     var pos2 = content.ToString().IndexOf(@"""", pos1);
                     var id = content.ToString().Substring(pos1 + @";m=subtitles#".Length, pos2 - pos1 - @";m=subtitles#".Length);
                     Console.WriteLine(string.Format("id of subtitle:{0}", id));
-                    Console.WriteLine("-----------------------");
+                    Console.WriteLine("-----------------------"); 
                 }
                 
             }
