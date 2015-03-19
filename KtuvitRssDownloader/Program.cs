@@ -28,11 +28,7 @@ namespace KtuvitRssDownloader
 					Console.WriteLine(string.Format("ID of subtitle:{0}", id));
 					Console.WriteLine("-----------------------");
                     downloader.Download(id,item.Title.Substring(item.Title.IndexOf('|')+2));
-                    //using(var client = new WebClient())
-                    //{
-                    //    var filename = item.Title.Substring(item.Title.IndexOf('|')+2);
-                    //    client.DownloadFile(string.Format(subtitleDownloadUrl, id), string.Format(@"D:\TV Shows\{0}.zip", filename));
-                    //}
+
 					
 				}
 				
