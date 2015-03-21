@@ -1,16 +1,18 @@
 ﻿using Argotic.Syndication;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace KtuvitRssDownloader
+namespace RssPareserAndDownloader
 {
-    internal class Program
+    public class RssParser
     {
-        private static void Main(string[] args)
+        public void ParseAndDownload(string feedUrl)
         {
-            const string url = @"http://rss.ktuvit.com/myseriesrss.php?uid=348679&ticket=AC8846E87";
             var downloader = new SubtitleDownloader();
-            var feed = RssFeed.Create(new Uri(url));
+            var feed = RssFeed.Create(new Uri(feedUrl));
             foreach (var item in feed.Channel.Items)
             {
                 Console.WriteLine("Name:{0}, Link:{1}, Date:{2}", item.Title, item.Link, item.PublicationDate);

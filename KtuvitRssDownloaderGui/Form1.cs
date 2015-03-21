@@ -1,22 +1,17 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KtuvitRssDownloaderGui
 {
-    public partial class Form1 : Form
+    public partial class frmMainForm : Form
     {
         private const string AppName = "Ktuvit RSS downloader";
+
         // The path to the key where Windows looks for startup applications
-        RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-        public Form1()
+        private RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+        public frmMainForm()
         {
             InitializeComponent();
             // Check to see the current state (running at startup or not)
@@ -32,24 +27,20 @@ namespace KtuvitRssDownloaderGui
         {
             if (rkApp.GetValue(AppName) == null)
             {
-                // The value doesn't exist, the application is not set to run at startup
                 chBoxShouldRunAtStartUp.Checked = false;
             }
             else
             {
-                // The value exists, the application is set to run at startup
                 chBoxShouldRunAtStartUp.Checked = true;
             }
         }
-        
 
         private void btnDirectoryToSave_Click(object sender, EventArgs e)
         {
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                txtBoxDirectoryToSave.Text = folderBrowserDialog1.SelectedPath;
-               
+                txtBoxDirectoryToSave.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
@@ -73,10 +64,6 @@ namespace KtuvitRssDownloaderGui
             {
                 MinimizeToTray();
             }
-            //else if (this.WindowState == FormWindowState.Normal)
-            //{
-            //    Restore();
-            //}
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -88,7 +75,7 @@ namespace KtuvitRssDownloaderGui
         {
             this.Hide();
             this.WindowState = FormWindowState.Minimized;
-            notifyIcon1.Visible = true;
+            notifyIcon.Visible = true;
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
@@ -98,13 +85,10 @@ namespace KtuvitRssDownloaderGui
 
         private void Restore()
         {
-            notifyIcon1.Visible = false;
+            notifyIcon.Visible = false;
             this.Show();
             if (this.WindowState == FormWindowState.Minimized)
                 this.WindowState = FormWindowState.Normal;
-
-            // Activate the form. 
-
             this.Activate();
         }
 
@@ -121,6 +105,11 @@ namespace KtuvitRssDownloaderGui
         private void Form1_Shown(object sender, EventArgs e)
         {
             //launch thread to start downloading
+        }
+
+        private void menuItemStartMinimized_Click(object sender, EventArgs e)
+        {
+            menuItemStartMinimized.Checked = !menuItemStartMinimized.Checked;
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿namespace KtuvitRssDownloaderGui
 {
-    partial class Form1
+    partial class frmMainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,9 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainForm));
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtBoxUsername = new System.Windows.Forms.TextBox();
+            this.txtBoxPassword = new System.Windows.Forms.MaskedTextBox();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lblForInterval = new System.Windows.Forms.Label();
             this.btnDirectoryToSave = new System.Windows.Forms.Button();
@@ -45,17 +52,16 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayIconContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabs.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.checkRssInterval)).BeginInit();
@@ -66,7 +72,6 @@
             // 
             // tabs
             // 
-            this.tabs.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabs.Controls.Add(this.tabPage1);
             this.tabs.Controls.Add(this.tabPage2);
             this.tabs.Location = new System.Drawing.Point(0, 26);
@@ -77,6 +82,11 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.txtBoxUsername);
+            this.tabPage1.Controls.Add(this.txtBoxPassword);
             this.tabPage1.Controls.Add(this.btnCancel);
             this.tabPage1.Controls.Add(this.btnSave);
             this.tabPage1.Controls.Add(this.label2);
@@ -88,18 +98,80 @@
             this.tabPage1.Controls.Add(this.chBoxShouldRunAtStartUp);
             this.tabPage1.Controls.Add(this.checkRssInterval);
             this.tabPage1.Controls.Add(this.textBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(417, 269);
+            this.tabPage1.Size = new System.Drawing.Size(417, 272);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(211, 38);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(56, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Password:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 38);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Username:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 11);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(314, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Please provide username and password to connect to Ktuvit.com";
+            // 
+            // txtBoxUsername
+            // 
+            this.txtBoxUsername.Location = new System.Drawing.Point(74, 34);
+            this.txtBoxUsername.Name = "txtBoxUsername";
+            this.txtBoxUsername.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxUsername.TabIndex = 9;
+            // 
+            // txtBoxPassword
+            // 
+            this.txtBoxPassword.Location = new System.Drawing.Point(269, 34);
+            this.txtBoxPassword.Name = "txtBoxPassword";
+            this.txtBoxPassword.PasswordChar = '*';
+            this.txtBoxPassword.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxPassword.TabIndex = 8;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(246, 235);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 5;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(336, 235);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 6;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(198, 131);
+            this.label2.Location = new System.Drawing.Point(198, 203);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 7;
@@ -108,7 +180,7 @@
             // lblForInterval
             // 
             this.lblForInterval.AutoSize = true;
-            this.lblForInterval.Location = new System.Drawing.Point(9, 131);
+            this.lblForInterval.Location = new System.Drawing.Point(9, 203);
             this.lblForInterval.Name = "lblForInterval";
             this.lblForInterval.Size = new System.Drawing.Size(125, 13);
             this.lblForInterval.TabIndex = 6;
@@ -116,25 +188,25 @@
             // 
             // btnDirectoryToSave
             // 
-            this.btnDirectoryToSave.Location = new System.Drawing.Point(375, 85);
+            this.btnDirectoryToSave.Location = new System.Drawing.Point(375, 146);
             this.btnDirectoryToSave.Name = "btnDirectoryToSave";
             this.btnDirectoryToSave.Size = new System.Drawing.Size(36, 23);
-            this.btnDirectoryToSave.TabIndex = 5;
+            this.btnDirectoryToSave.TabIndex = 2;
             this.btnDirectoryToSave.Text = "...";
             this.btnDirectoryToSave.UseVisualStyleBackColor = true;
             this.btnDirectoryToSave.Click += new System.EventHandler(this.btnDirectoryToSave_Click);
             // 
             // txtBoxDirectoryToSave
             // 
-            this.txtBoxDirectoryToSave.Location = new System.Drawing.Point(9, 86);
+            this.txtBoxDirectoryToSave.Location = new System.Drawing.Point(9, 147);
             this.txtBoxDirectoryToSave.Name = "txtBoxDirectoryToSave";
             this.txtBoxDirectoryToSave.Size = new System.Drawing.Size(360, 20);
-            this.txtBoxDirectoryToSave.TabIndex = 4;
+            this.txtBoxDirectoryToSave.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 69);
+            this.label1.Location = new System.Drawing.Point(9, 130);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(169, 13);
             this.label1.TabIndex = 3;
@@ -143,8 +215,9 @@
             // lblFeedInfo
             // 
             this.lblFeedInfo.AutoSize = true;
+            this.lblFeedInfo.BackColor = System.Drawing.Color.White;
             this.lblFeedInfo.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.lblFeedInfo.Location = new System.Drawing.Point(9, 17);
+            this.lblFeedInfo.Location = new System.Drawing.Point(9, 78);
             this.lblFeedInfo.Name = "lblFeedInfo";
             this.lblFeedInfo.Size = new System.Drawing.Size(130, 13);
             this.lblFeedInfo.TabIndex = 2;
@@ -153,20 +226,20 @@
             // chBoxShouldRunAtStartUp
             // 
             this.chBoxShouldRunAtStartUp.AutoSize = true;
-            this.chBoxShouldRunAtStartUp.Location = new System.Drawing.Point(9, 173);
+            this.chBoxShouldRunAtStartUp.Location = new System.Drawing.Point(9, 236);
             this.chBoxShouldRunAtStartUp.Name = "chBoxShouldRunAtStartUp";
             this.chBoxShouldRunAtStartUp.Size = new System.Drawing.Size(200, 17);
-            this.chBoxShouldRunAtStartUp.TabIndex = 2;
+            this.chBoxShouldRunAtStartUp.TabIndex = 4;
             this.chBoxShouldRunAtStartUp.Text = "Start donwloader on windows startup";
             this.chBoxShouldRunAtStartUp.UseVisualStyleBackColor = true;
             this.chBoxShouldRunAtStartUp.CheckedChanged += new System.EventHandler(this.chBoxShouldRunAtStartUp_CheckedChanged);
             // 
             // checkRssInterval
             // 
-            this.checkRssInterval.Location = new System.Drawing.Point(140, 127);
+            this.checkRssInterval.Location = new System.Drawing.Point(140, 199);
             this.checkRssInterval.Name = "checkRssInterval";
             this.checkRssInterval.Size = new System.Drawing.Size(52, 20);
-            this.checkRssInterval.TabIndex = 1;
+            this.checkRssInterval.TabIndex = 3;
             this.checkRssInterval.Value = new decimal(new int[] {
             30,
             0,
@@ -175,7 +248,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(9, 33);
+            this.textBox1.Location = new System.Drawing.Point(9, 94);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(402, 20);
             this.textBox1.TabIndex = 0;
@@ -183,10 +256,10 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.richTextBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(417, 269);
+            this.tabPage2.Size = new System.Drawing.Size(417, 272);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Logs";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -215,15 +288,23 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemStartMinimized,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // menuItemStartMinimized
+            // 
+            this.menuItemStartMinimized.Name = "menuItemStartMinimized";
+            this.menuItemStartMinimized.Size = new System.Drawing.Size(160, 22);
+            this.menuItemStartMinimized.Text = "Start minimized ";
+            this.menuItemStartMinimized.Click += new System.EventHandler(this.menuItemStartMinimized_Click);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // helpToolStripMenuItem
@@ -240,37 +321,17 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // folderBrowserDialog1
+            // folderBrowserDialog
             // 
-            this.folderBrowserDialog1.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
-            // btnSave
+            // notifyIcon
             // 
-            this.btnSave.Location = new System.Drawing.Point(336, 235);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 8;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(246, 235);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 9;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // notifyIcon1
-            // 
-            this.notifyIcon1.ContextMenuStrip = this.trayIconContextMenu;
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.Visible = true;
-            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+            this.notifyIcon.ContextMenuStrip = this.trayIconContextMenu;
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = global::KtuvitRssDownloaderGui.Properties.Resources.ApplicationName;
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
             // trayIconContextMenu
             // 
@@ -285,23 +346,23 @@
             // restoreToolStripMenuItem
             // 
             this.restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
-            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.restoreToolStripMenuItem.Text = "Restore";
             this.restoreToolStripMenuItem.Click += new System.EventHandler(this.restoreToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem1
-            // 
-            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem1.Text = "Exit";
-            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(110, 6);
             // 
-            // Form1
+            // exitToolStripMenuItem1
+            // 
+            this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(113, 22);
+            this.exitToolStripMenuItem1.Text = "Exit";
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
+            // 
+            // frmMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -311,7 +372,7 @@
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "frmMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ktuvit RSS downloader";
             this.Shown += new System.EventHandler(this.Form1_Shown);
@@ -349,16 +410,22 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblForInterval;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenuStrip trayIconContextMenu;
         private System.Windows.Forms.ToolStripMenuItem restoreToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtBoxUsername;
+        private System.Windows.Forms.MaskedTextBox txtBoxPassword;
+        private System.Windows.Forms.ToolStripMenuItem menuItemStartMinimized;
     }
 }
 
