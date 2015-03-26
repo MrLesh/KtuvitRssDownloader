@@ -1,12 +1,17 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Net;
 using System.Windows.Forms;
+using System.Configuration;
+using System.Resources;
 
 namespace KtuvitRssDownloaderGui
 {
     public partial class frmMainForm : Form
     {
-        private const string AppName = "Ktuvit RSS downloader";
+        //private const string AppName = "Ktuvit RSS downloader";
+        private const string Username = "Username";
+        private const string Password = "Password";
 
         // The path to the key where Windows looks for startup applications
         private RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -14,7 +19,14 @@ namespace KtuvitRssDownloaderGui
         public frmMainForm()
         {
             InitializeComponent();
-            // Check to see the current state (running at startup or not)
+            LoadValuesFromAppConfig();
+        }
+
+        private void LoadValuesFromAppConfig()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            txtBoxUsername.Text = WebUtility.UrlDecode(ConfigurationManager.AppSettings[Username]);
+            txtBoxPassword.Text = WebUtility.UrlDecode(ConfigurationManager.AppSettings[Password]);
             CheckRegistryIfRunAtStartup();
         }
 
@@ -25,7 +37,7 @@ namespace KtuvitRssDownloaderGui
 
         private void CheckRegistryIfRunAtStartup()
         {
-            if (rkApp.GetValue(AppName) == null)
+            if (rkApp.GetValue(Properties.Resources.ApplicationName) == null)
             {
                 chBoxShouldRunAtStartUp.Checked = false;
             }
@@ -49,12 +61,12 @@ namespace KtuvitRssDownloaderGui
             if (chBoxShouldRunAtStartUp.Checked)
             {
                 // Add the value in the registry so that the application runs at startup
-                rkApp.SetValue(AppName, Application.ExecutablePath.ToString());
+                rkApp.SetValue(Properties.Resources.ApplicationName, Application.ExecutablePath.ToString());
             }
             else
             {
                 // Remove the value from the registry so that the application doesn't start
-                rkApp.DeleteValue(AppName, false);
+                rkApp.DeleteValue(Properties.Resources.ApplicationName, false);
             }
         }
 
@@ -110,6 +122,19 @@ namespace KtuvitRssDownloaderGui
         private void menuItemStartMinimized_Click(object sender, EventArgs e)
         {
             menuItemStartMinimized.Checked = !menuItemStartMinimized.Checked;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var encodedUsername = WebUtility.UrlEncode(txtBoxUsername.Text);
+            var encodedPassword = WebUtility.UrlEncode(txtBoxPassword.Text);
+            var config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            config.AppSettings.Settings.Remove("UserName");
+            config.AppSettings.Settings.Add("UserName", encodedUsername);
+            config.AppSettings.Settings.Remove("Password");
+            config.AppSettings.Settings.Add("Password", encodedPassword);
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
         }
 
     }
