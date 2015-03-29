@@ -4,14 +4,24 @@ using System.Net;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Resources;
+using KtuvitRssDownloader.DownloadScheduler;
+using KtuvitRssDownloader.Logging;
+using System.Drawing;
+using KtuvitRssDownloader.KtuvitRssDownloaderGui;
+using KtuvitRssDownloader.Utils;
 
-namespace KtuvitRssDownloaderGui
+namespace KtuvitRssDownloader.KtuvitRssDownloaderGui
 {
     public partial class frmMainForm : Form
     {
+        private SimpleScheduler _scheduler;
+        private Logger log = Logger.GetInstance();
         //private const string AppName = "Ktuvit RSS downloader";
         private const string Username = "Username";
         private const string Password = "Password";
+        private const string FeedUrl = "FeedUrl";
+        private const string Interval = "Interval";
+        private const string SaveDir = "SaveDir";
 
         // The path to the key where Windows looks for startup applications
         private RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -19,15 +29,56 @@ namespace KtuvitRssDownloaderGui
         public frmMainForm()
         {
             InitializeComponent();
+            log.Log += LogAccepted;
             LoadValuesFromAppConfig();
+        }
+
+        private void LogAccepted(object sender, CustomEventArgs e)
+        {
+            switch (e.Level)
+            {
+                case(Logger.Level.Debug):
+                    RichTextBoxAppendText(e.Message, Color.Black);
+                    break;
+                case(Logger.Level.Error):
+                    RichTextBoxAppendText(e.Message, Color.Red);
+                    break;
+                case(Logger.Level.Info):
+                    RichTextBoxAppendText(e.Message, Color.Blue);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void RichTextBoxAppendText(string message, Color color)
+        {         
+            this.InvokeSafe(() => AppendMessage(message,color));
+        }
+
+        private void AppendMessage(string message,Color color)
+        {
+            int length = richTxtBox.TextLength;
+            if (!string.IsNullOrEmpty(message))
+            {
+                int start = richTxtBox.SelectionStart;
+                int len = richTxtBox.SelectionLength;
+                richTxtBox.SelectionStart = length;
+                richTxtBox.SelectionLength = message.Length;
+                richTxtBox.SelectionColor = color;
+                richTxtBox.AppendText(string.Format("{0}>{1}{2}", DateTime.Now.TimeOfDay, message,Environment.NewLine));
+            }
         }
 
         private void LoadValuesFromAppConfig()
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-            txtBoxUsername.Text = WebUtility.UrlDecode(ConfigurationManager.AppSettings[Username]);
-            txtBoxPassword.Text = WebUtility.UrlDecode(ConfigurationManager.AppSettings[Password]);
+            txtBoxUsername.Text = WebUtility.UrlDecode(AppSettingsUtil.ReadFromSettings(Username));
+            txtBoxPassword.Text = WebUtility.UrlDecode(AppSettingsUtil.ReadFromSettings(Password));
+            checkRssInterval.Value = decimal.Parse(AppSettingsUtil.ReadFromSettings(Interval));
+            txtBoxFeedUrl.Text = AppSettingsUtil.ReadFromSettings(FeedUrl);
+            txtBoxDirectoryToSave.Text = AppSettingsUtil.ReadFromSettings(SaveDir);
             CheckRegistryIfRunAtStartup();
+            log.Info(this.GetType().Name, "All values were loaded from settings");
         }
 
         public void frmStartup()
@@ -53,6 +104,7 @@ namespace KtuvitRssDownloaderGui
             if (result == DialogResult.OK)
             {
                 txtBoxDirectoryToSave.Text = folderBrowserDialog.SelectedPath;
+                AppSettingsUtil.WriteASetting(SaveDir, txtBoxDirectoryToSave.Text);
             }
         }
 
@@ -116,7 +168,7 @@ namespace KtuvitRssDownloaderGui
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            //launch thread to start downloading
+            //
         }
 
         private void menuItemStartMinimized_Click(object sender, EventArgs e)
@@ -128,14 +180,43 @@ namespace KtuvitRssDownloaderGui
         {
             var encodedUsername = WebUtility.UrlEncode(txtBoxUsername.Text);
             var encodedPassword = WebUtility.UrlEncode(txtBoxPassword.Text);
-            var config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-            config.AppSettings.Settings.Remove("UserName");
-            config.AppSettings.Settings.Add("UserName", encodedUsername);
-            config.AppSettings.Settings.Remove("Password");
-            config.AppSettings.Settings.Add("Password", encodedPassword);
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
+            AppSettingsUtil.WriteASetting(Username, encodedUsername);
+            AppSettingsUtil.WriteASetting(Password, encodedPassword);
+            
         }
 
+        private void checkRssInterval_ValueChanged(object sender, EventArgs e)
+        {
+            AppSettingsUtil.WriteASetting(Interval, Convert.ToInt32(checkRssInterval.Value).ToString());
+        }
+
+        private void btnExecute_Click(object sender, EventArgs e)
+        {
+            var schduler = GetScheduler();
+            _scheduler.StartSchedule();
+        }
+
+        private SimpleScheduler GetScheduler()
+        {
+            if (_scheduler != null)
+                return _scheduler;
+
+            _scheduler = new SimpleScheduler();
+            return _scheduler;
+
+        }
+
+        private void txtBoxFeedUrl_TextChanged(object sender, EventArgs e)
+        {
+            AppSettingsUtil.WriteASetting(FeedUrl, txtBoxFeedUrl.Text);
+        }
+
+        internal void ApplicationExit(object sender, EventArgs e)
+        {
+            var scheduler = GetScheduler();
+            scheduler.StopScheuler();
+        }
+
+        
     }
 }

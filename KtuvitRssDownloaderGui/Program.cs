@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace KtuvitRssDownloaderGui
+namespace KtuvitRssDownloader.KtuvitRssDownloaderGui
 {
     static class Program
     {
@@ -16,7 +16,10 @@ namespace KtuvitRssDownloaderGui
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMainForm());
+            var myForm = new frmMainForm();
+            Application.ApplicationExit += myForm.ApplicationExit;
+            //Common.Logging.LogManager.Adapter = new Common.Logging.Simple. { Level = Common.Logging.LogLevel.Info};
+            Application.Run(myForm);
         }
     }
 }

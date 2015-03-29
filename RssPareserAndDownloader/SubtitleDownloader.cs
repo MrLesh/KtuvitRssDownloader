@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KtuvitRssDownloader.Logging;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -7,16 +8,19 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RssPareserAndDownloader
+namespace KtuvitRssDownloader.RssPareserAndDownloader
 {
-    class SubtitleDownloader
+    public class SubtitleDownloader
     {
+        private Logger _log = Logger.GetInstance();
         const string subtitleDownloadUrl = @"http://www.ktuvit.com/downloadsubtitle.php?id={0}";
         const string loginUrl = @"http://www.ktuvit.com/login.php";
         private CookieCollection _cookies = null;
-        const string Dir = @"C:\tmp";
+        //TODO - read dir from config
+        private readonly string Dir = Utils.AppSettingsUtil.ReadFromSettings("SaveDir");
         public void Download(string id, string fileName)
         {
+            _log.Debug(this.GetType().Name, string.Format("Going to download file :{0}", string.Format(subtitleDownloadUrl, id)));
             if (_cookies == null)
                 _cookies = DoLogin();
             var request = (HttpWebRequest)WebRequest.Create(string.Format(subtitleDownloadUrl, id));
@@ -36,30 +40,73 @@ namespace RssPareserAndDownloader
             request.Accept = @"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8}";
             request.UserAgent = @"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2162.0 Safari/537.36";
             request.Headers = new WebHeaderCollection { collection };
-            var response = request.GetResponse();
+            WebResponse response;
+            try
+            {
+                 response = request.GetResponse();
+            }
+            catch (Exception e)
+            {
+                _log.Error(this.GetType().Name, string.Format("Failed to download file with error {0}", e.Message));
+                return;
+            }
+            
             
             var fileNameFromResponse = response.Headers["Content-Disposition"].Substring(response.Headers["Content-Disposition"].IndexOf("Subtitle"));
+            try
+            {
+                CreateDirectoryIfNeeded(Dir);
+            }
+            catch(Exception e)
+            {
+                _log.Error(this.GetType().Name, string.Format("Failed to create directory with error {0}", e.Message));
+                response.Close();
+                return;
+            }
+            
             var newFileName = Path.Combine(Dir, fileNameFromResponse);
+            _log.Debug(this.GetType().Name, string.Format("Going to save downloaded file to :{0}", newFileName));
             if (File.Exists(newFileName))
             {
                 File.Delete(newFileName);
             }
-            FileStream os = new FileStream(newFileName, FileMode.OpenOrCreate, FileAccess.Write);
-            byte[] buff = new byte[102400];
-            int c = 0;
-            Stream s = response.GetResponseStream();
-            while ((c = s.Read(buff, 0, 10400)) > 0)
+            try
             {
-                os.Write(buff, 0, c);
-                os.Flush();
+                FileStream os = new FileStream(newFileName, FileMode.OpenOrCreate, FileAccess.Write);
+                byte[] buff = new byte[102400];
+                int c = 0;
+                Stream s = response.GetResponseStream();
+                while ((c = s.Read(buff, 0, 10400)) > 0)
+                {
+                    os.Write(buff, 0, c);
+                    os.Flush();
+                }
+                os.Close();
+                s.Close();
             }
-            os.Close();
-            s.Close();
-            response.Close();
+            catch (Exception e)
+            {
+                _log.Error(this.GetType().Name, string.Format("Failed to save file with error {0}", e.Message));
+                return;
+            }
+            finally
+            {
+                response.Close();
+            }
+
+            
+            
+        }
+
+        private void CreateDirectoryIfNeeded(string Dir)
+        {
+            if (!Directory.Exists(Dir))
+                Directory.CreateDirectory(Dir);
         }
 
         private CookieCollection DoLogin()
         {
+            _log.Debug(this.GetType().Name, string.Format("Going to do login"));
             var request = (HttpWebRequest)WebRequest.Create(loginUrl);
             request.Method = "POST";
             request.CookieContainer = new CookieContainer();
@@ -78,6 +125,7 @@ namespace RssPareserAndDownloader
             request.UserAgent = @"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2162.0 Safari/537.36";
             request.Headers = new WebHeaderCollection { collection };
             request.ContentType = "application/x-www-form-urlencoded";
+            //TODO - read credntials from config file
             var buffer = Encoding.ASCII.GetBytes(@"email=alonmatat%40gmail.com&password=alon2580&Login=%D7%94%D7%AA%D7%97%D7%91%D7%A8");
             request.ContentLength = buffer.Length;
             var requestStream = request.GetRequestStream();
@@ -96,6 +144,7 @@ namespace RssPareserAndDownloader
                 Console.WriteLine(cookie);
             }
             response.Close();
+            _log.Debug(this.GetType().Name, string.Format("Login was succesfull"));
             return ((HttpWebResponse)response).Cookies;
         }
     }

@@ -7,6 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KtuvitRssDownloaderGui", "K
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RssPareserAndDownloader", "RssPareserAndDownloader\RssPareserAndDownloader.csproj", "{3596A51A-DE87-4DBB-B959-4507779B3E61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DownloadScheduler", "DownloadScheduler\DownloadScheduler.csproj", "{E6924EB2-8F46-4CC2-8717-711BEB99E2A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{D178795E-C888-40D2-AB1F-EC588C8EA97F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{F6FD4C49-6441-496A-B400-88B5B1A7FEED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5EA446FC-6AFA-4FF5-8F02-0B52EEDC20F5}"
+	ProjectSection(SolutionItems) = preProject
+		Settings.settings = Settings.settings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +32,18 @@ Global
 		{3596A51A-DE87-4DBB-B959-4507779B3E61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3596A51A-DE87-4DBB-B959-4507779B3E61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3596A51A-DE87-4DBB-B959-4507779B3E61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6924EB2-8F46-4CC2-8717-711BEB99E2A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6924EB2-8F46-4CC2-8717-711BEB99E2A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6924EB2-8F46-4CC2-8717-711BEB99E2A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6924EB2-8F46-4CC2-8717-711BEB99E2A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D178795E-C888-40D2-AB1F-EC588C8EA97F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D178795E-C888-40D2-AB1F-EC588C8EA97F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D178795E-C888-40D2-AB1F-EC588C8EA97F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D178795E-C888-40D2-AB1F-EC588C8EA97F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6FD4C49-6441-496A-B400-88B5B1A7FEED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6FD4C49-6441-496A-B400-88B5B1A7FEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6FD4C49-6441-496A-B400-88B5B1A7FEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FD4C49-6441-496A-B400-88B5B1A7FEED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

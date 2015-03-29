@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KtuvitRssDownloaderGui.Properties {
+namespace KtuvitRssDownloader.KtuvitRssDownloaderGui.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace KtuvitRssDownloaderGui.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KtuvitRssDownloaderGui.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KtuvitRssDownloader.KtuvitRssDownloaderGui.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

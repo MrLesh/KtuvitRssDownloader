@@ -1,4 +1,4 @@
-﻿namespace KtuvitRssDownloaderGui
+﻿namespace KtuvitRssDownloader.KtuvitRssDownloaderGui
 {
     partial class frmMainForm
     {
@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainForm));
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnExecute = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -47,9 +48,9 @@
             this.lblFeedInfo = new System.Windows.Forms.Label();
             this.chBoxShouldRunAtStartUp = new System.Windows.Forms.CheckBox();
             this.checkRssInterval = new System.Windows.Forms.NumericUpDown();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtBoxFeedUrl = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTxtBox = new System.Windows.Forms.RichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,11 +78,12 @@
             this.tabs.Location = new System.Drawing.Point(0, 26);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(425, 298);
+            this.tabs.Size = new System.Drawing.Size(456, 298);
             this.tabs.TabIndex = 0;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnExecute);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label3);
@@ -97,19 +99,29 @@
             this.tabPage1.Controls.Add(this.lblFeedInfo);
             this.tabPage1.Controls.Add(this.chBoxShouldRunAtStartUp);
             this.tabPage1.Controls.Add(this.checkRssInterval);
-            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.txtBoxFeedUrl);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(417, 272);
+            this.tabPage1.Size = new System.Drawing.Size(448, 272);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Main";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btnExecute
+            // 
+            this.btnExecute.Location = new System.Drawing.Point(375, 22);
+            this.btnExecute.Name = "btnExecute";
+            this.btnExecute.Size = new System.Drawing.Size(59, 39);
+            this.btnExecute.TabIndex = 15;
+            this.btnExecute.Text = "Execute!";
+            this.btnExecute.UseVisualStyleBackColor = true;
+            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(211, 38);
+            this.label5.Location = new System.Drawing.Point(184, 38);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 13);
             this.label5.TabIndex = 12;
@@ -138,15 +150,15 @@
             this.txtBoxUsername.Location = new System.Drawing.Point(74, 34);
             this.txtBoxUsername.Name = "txtBoxUsername";
             this.txtBoxUsername.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxUsername.TabIndex = 9;
+            this.txtBoxUsername.TabIndex = 8;
             // 
             // txtBoxPassword
             // 
-            this.txtBoxPassword.Location = new System.Drawing.Point(269, 34);
+            this.txtBoxPassword.Location = new System.Drawing.Point(242, 34);
             this.txtBoxPassword.Name = "txtBoxPassword";
             this.txtBoxPassword.PasswordChar = '*';
             this.txtBoxPassword.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxPassword.TabIndex = 8;
+            this.txtBoxPassword.TabIndex = 9;
             // 
             // btnCancel
             // 
@@ -154,7 +166,7 @@
             this.btnCancel.Location = new System.Drawing.Point(246, 235);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 5;
+            this.btnCancel.TabIndex = 13;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -164,7 +176,7 @@
             this.btnSave.Location = new System.Drawing.Point(336, 235);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 6;
+            this.btnSave.TabIndex = 14;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -199,10 +211,11 @@
             // 
             // txtBoxDirectoryToSave
             // 
+            this.txtBoxDirectoryToSave.Enabled = false;
             this.txtBoxDirectoryToSave.Location = new System.Drawing.Point(9, 147);
             this.txtBoxDirectoryToSave.Name = "txtBoxDirectoryToSave";
             this.txtBoxDirectoryToSave.Size = new System.Drawing.Size(360, 20);
-            this.txtBoxDirectoryToSave.TabIndex = 1;
+            this.txtBoxDirectoryToSave.TabIndex = 11;
             // 
             // label1
             // 
@@ -240,40 +253,42 @@
             this.checkRssInterval.Location = new System.Drawing.Point(140, 199);
             this.checkRssInterval.Name = "checkRssInterval";
             this.checkRssInterval.Size = new System.Drawing.Size(52, 20);
-            this.checkRssInterval.TabIndex = 3;
+            this.checkRssInterval.TabIndex = 12;
             this.checkRssInterval.Value = new decimal(new int[] {
             30,
             0,
             0,
             0});
+            this.checkRssInterval.ValueChanged += new System.EventHandler(this.checkRssInterval_ValueChanged);
             // 
-            // textBox1
+            // txtBoxFeedUrl
             // 
-            this.textBox1.Location = new System.Drawing.Point(9, 94);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(402, 20);
-            this.textBox1.TabIndex = 0;
+            this.txtBoxFeedUrl.Location = new System.Drawing.Point(9, 94);
+            this.txtBoxFeedUrl.Name = "txtBoxFeedUrl";
+            this.txtBoxFeedUrl.Size = new System.Drawing.Size(402, 20);
+            this.txtBoxFeedUrl.TabIndex = 10;
+            this.txtBoxFeedUrl.TextChanged += new System.EventHandler(this.txtBoxFeedUrl_TextChanged);
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.richTextBox1);
+            this.tabPage2.Controls.Add(this.richTxtBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(417, 272);
+            this.tabPage2.Size = new System.Drawing.Size(448, 272);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Logs";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // richTextBox1
+            // richTxtBox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTextBox1.Size = new System.Drawing.Size(414, 295);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
+            this.richTxtBox.Location = new System.Drawing.Point(0, 0);
+            this.richTxtBox.Name = "richTxtBox";
+            this.richTxtBox.ReadOnly = true;
+            this.richTxtBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.richTxtBox.Size = new System.Drawing.Size(448, 272);
+            this.richTxtBox.TabIndex = 0;
+            this.richTxtBox.Text = "";
             // 
             // menuStrip1
             // 
@@ -282,7 +297,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(423, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(456, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -330,7 +345,7 @@
             // 
             this.notifyIcon.ContextMenuStrip = this.trayIconContextMenu;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = global::KtuvitRssDownloaderGui.Properties.Resources.ApplicationName;
+            this.notifyIcon.Text = global::KtuvitRssDownloader.KtuvitRssDownloaderGui.Properties.Resources.ApplicationName;
             this.notifyIcon.Visible = true;
             this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
@@ -368,7 +383,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(423, 321);
+            this.ClientSize = new System.Drawing.Size(456, 321);
             this.Controls.Add(this.tabs);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -403,9 +418,9 @@
         private System.Windows.Forms.Label lblFeedInfo;
         private System.Windows.Forms.CheckBox chBoxShouldRunAtStartUp;
         private System.Windows.Forms.NumericUpDown checkRssInterval;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtBoxFeedUrl;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox richTxtBox;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -427,6 +442,7 @@
         private System.Windows.Forms.TextBox txtBoxUsername;
         private System.Windows.Forms.MaskedTextBox txtBoxPassword;
         private System.Windows.Forms.ToolStripMenuItem menuItemStartMinimized;
+        private System.Windows.Forms.Button btnExecute;
     }
 }
 
