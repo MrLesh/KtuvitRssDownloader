@@ -5,16 +5,18 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Resources;
 using KtuvitRssDownloader.DownloadScheduler;
+using KtuvitRssDownloader.DownloadScheduler.Interfaces;
 using KtuvitRssDownloader.Logging;
 using System.Drawing;
 using KtuvitRssDownloader.KtuvitRssDownloaderGui;
 using KtuvitRssDownloader.Utils;
+using KtuvitRssDownloader.DownloadScheduler.Scheduler;
 
 namespace KtuvitRssDownloader.KtuvitRssDownloaderGui
 {
     public partial class frmMainForm : Form
     {
-        private SimpleScheduler _scheduler;
+        private Scheduler _scheduler;
         private Logger log = Logger.GetInstance();
         //private const string AppName = "Ktuvit RSS downloader";
         private const string Username = "Username";
@@ -78,7 +80,7 @@ namespace KtuvitRssDownloader.KtuvitRssDownloaderGui
             txtBoxFeedUrl.Text = AppSettingsUtil.ReadFromSettings(FeedUrl);
             txtBoxDirectoryToSave.Text = AppSettingsUtil.ReadFromSettings(SaveDir);
             CheckRegistryIfRunAtStartup();
-            log.Info(this.GetType().Name, "All values were loaded from settings");
+            log.Info("All values were loaded from settings");
         }
 
         public void frmStartup()
@@ -193,15 +195,15 @@ namespace KtuvitRssDownloader.KtuvitRssDownloaderGui
         private void btnExecute_Click(object sender, EventArgs e)
         {
             var schduler = GetScheduler();
-            _scheduler.StartSchedule();
+            _scheduler.StartScheduler();
         }
 
-        private SimpleScheduler GetScheduler()
+        private Scheduler GetScheduler()
         {
             if (_scheduler != null)
                 return _scheduler;
 
-            _scheduler = new SimpleScheduler();
+            _scheduler = new TimerScheduler();
             return _scheduler;
 
         }
@@ -214,7 +216,13 @@ namespace KtuvitRssDownloader.KtuvitRssDownloaderGui
         internal void ApplicationExit(object sender, EventArgs e)
         {
             var scheduler = GetScheduler();
-            scheduler.StopScheuler();
+            scheduler.StopScheduler();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var scheduler = GetScheduler();
+            MessageBox.Show(scheduler.GetTimeLeft().ToString("HH:mm:ss"),"Next check of feed at");
         }
 
         

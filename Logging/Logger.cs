@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,18 +24,25 @@ namespace KtuvitRssDownloader.Logging
             return instance;
         }
 
-        public virtual void Debug(string className,string s) 
+        public virtual void Debug(string s,[CallerFilePath] string memberName = "") 
         {
-            DoLog(new CustomEventArgs(string.Format("[{0}]{1}", className, s), Level.Debug));
-        }
-        public virtual void Error(string className, string s)
-        {
-            DoLog(new CustomEventArgs(string.Format("[{0}]{1}", className, s), Level.Error));
+            if (!string.IsNullOrEmpty(memberName))
+                memberName = Path.GetFileNameWithoutExtension(memberName);
+            DoLog(new CustomEventArgs(string.Format("[{0}]: {1}", memberName, s), Level.Debug));
         }
 
-        public virtual void Info(string className, string s) 
+        public virtual void Error(string s, [CallerFilePath] string memberName = "")
         {
-            DoLog(new CustomEventArgs(string.Format("[{0}]{1}", className, s), Level.Info));
+            if (!string.IsNullOrEmpty(memberName))
+                memberName = Path.GetFileNameWithoutExtension(memberName);
+            DoLog(new CustomEventArgs(string.Format("[{0}]: {1}", memberName, s), Level.Error));
+        }
+
+        public virtual void Info(string s, [CallerFilePath] string memberName = "") 
+        {
+            if (!string.IsNullOrEmpty(memberName))
+                memberName = Path.GetFileNameWithoutExtension(memberName);
+            DoLog(new CustomEventArgs(string.Format("[{0}]: {1}", memberName, s), Level.Info));
         }
 
         private void DoLog(CustomEventArgs e)

@@ -12,12 +12,13 @@ using System.Threading.Tasks;
 
 namespace KtuvitRssDownloader.DownloadScheduler
 {
-    public class SimpleScheduler
+    public class MyQuartzScehduler : KtuvitRssDownloader.DownloadScheduler.Interfaces.Scheduler
     {
         private IScheduler _scheduler;
         private Logger _log = Logger.GetInstance();
+        private JobKey JobKey = new JobKey("MyJob","MyGroup");
 
-        public void StartSchedule() 
+        public override void StartScheduler() 
         {
             
             ISchedulerFactory schedFact = new StdSchedulerFactory();
@@ -28,7 +29,7 @@ namespace KtuvitRssDownloader.DownloadScheduler
 
             // define the job and tie it to our HelloJob class
             IJobDetail job = JobBuilder.Create<SimpleJob>()
-                .WithIdentity("job1", "group1")
+                .WithIdentity(JobKey)
                 .Build();
 
             // Trigger the job to run now, and then repeat every 10 seconds
@@ -36,20 +37,29 @@ namespace KtuvitRssDownloader.DownloadScheduler
                 .WithIdentity("trigger1", "group1")
                 .StartNow()
                 .WithSimpleSchedule(x => x
-                    .WithIntervalInSeconds(GetIntervalFromConfig())
+                    .WithIntervalInHours(GetIntervalFromConfig())
                     .RepeatForever())
                 .Build();
 
             // Tell quartz to schedule the job using our trigger
-            _scheduler.ScheduleJob(job, trigger);
+            var nextTimeToRun = _scheduler.ScheduleJob(job, trigger);
         }
 
-        private int GetIntervalFromConfig()
+
+
+        public override DateTime GetTimeLeft()
         {
-            return int.Parse(Utils.AppSettingsUtil.ReadFromSettings("Interval"));
+            var triggers = _scheduler.GetTriggersOfJob(JobKey);
+            if (triggers.Count > 0)
+            {
+                var nextFireTimeUtc = triggers[0].GetNextFireTimeUtc();
+                var nextTimeLocal = TimeZoneInfo.ConvertTimeFromUtc(nextFireTimeUtc.Value.UtcDateTime, TimeZoneInfo.Local);
+                return nextTimeLocal;
+            }
+            return DateTime.MinValue;
         }
 
-        public void StopScheuler()
+        public override void StopScheduler()
         {
             if(_scheduler!= null && _scheduler.IsStarted)
                 _scheduler.Shutdown();

@@ -55,8 +55,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\Scheduler.cs" />
+    <Compile Include="Scheduler\TimerScheduler.cs" />
     <Compile Include="SimpleJob.cs" />
-    <Compile Include="SimpleScheduler.cs" />
+    <Compile Include="Scheduler\MyQuartzScehduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

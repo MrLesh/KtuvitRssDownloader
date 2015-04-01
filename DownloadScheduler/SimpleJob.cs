@@ -18,21 +18,22 @@ namespace KtuvitRssDownloader.DownloadScheduler
         private Logger _log = Logger.GetInstance();
         public void Execute(IJobExecutionContext context)
         {
-            var rssParser = new RssParser();
+            
             var jobs = context.Scheduler.GetCurrentlyExecutingJobs();
             if (jobs.Count > 1) 
             {
-                _log.Info(this.GetType().Name, string.Format("There are {0} jobs running - terminating",jobs.Count));
+                _log.Info(string.Format("There are {0} jobs running - terminating",jobs.Count));
                 return;
             }
-            
-            var feedUrl = Utils.AppSettingsUtil.ReadFromSettings("FeedUrl");
-          //  var path = new System.Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath;
-           // Configuration config = ConfigurationManager.OpenExeConfiguration(Path.GetDirectoryName(path));
 
-            _log.Debug(this.GetType().Name, feedUrl);
-            //Common.Logging.LogManager.Adapter.GetLogger("SimpleJob").Debug(string.Format("{0}:{1}","kuku",DateTime.Now));
-            //Console.WriteLine(ConfigurationManager.AppSettings["FeedUrl"]);
+            Execute();
+        }
+
+        public void Execute()
+        {
+            var rssParser = new RssParser();
+            var feedUrl = Utils.AppSettingsUtil.ReadFromSettings("FeedUrl");
+            _log.Debug(feedUrl);
             rssParser.ParseAndDownload(feedUrl);
         }
     }

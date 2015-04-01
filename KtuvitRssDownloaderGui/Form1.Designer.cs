@@ -63,6 +63,7 @@
             this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.checkRssInterval)).BeginInit();
@@ -83,6 +84,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.btnExecute);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label4);
@@ -163,7 +165,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(246, 235);
+            this.btnCancel.Location = new System.Drawing.Point(269, 234);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 13;
@@ -173,7 +175,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(336, 235);
+            this.btnSave.Location = new System.Drawing.Point(359, 234);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 14;
@@ -186,9 +188,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(198, 203);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "minutes";
+            this.label2.Text = "Hours";
             // 
             // lblForInterval
             // 
@@ -201,7 +203,7 @@
             // 
             // btnDirectoryToSave
             // 
-            this.btnDirectoryToSave.Location = new System.Drawing.Point(375, 146);
+            this.btnDirectoryToSave.Location = new System.Drawing.Point(398, 145);
             this.btnDirectoryToSave.Name = "btnDirectoryToSave";
             this.btnDirectoryToSave.Size = new System.Drawing.Size(36, 23);
             this.btnDirectoryToSave.TabIndex = 2;
@@ -214,7 +216,7 @@
             this.txtBoxDirectoryToSave.Enabled = false;
             this.txtBoxDirectoryToSave.Location = new System.Drawing.Point(9, 147);
             this.txtBoxDirectoryToSave.Name = "txtBoxDirectoryToSave";
-            this.txtBoxDirectoryToSave.Size = new System.Drawing.Size(360, 20);
+            this.txtBoxDirectoryToSave.Size = new System.Drawing.Size(383, 20);
             this.txtBoxDirectoryToSave.TabIndex = 11;
             // 
             // label1
@@ -255,7 +257,7 @@
             this.checkRssInterval.Size = new System.Drawing.Size(52, 20);
             this.checkRssInterval.TabIndex = 12;
             this.checkRssInterval.Value = new decimal(new int[] {
-            30,
+            1,
             0,
             0,
             0});
@@ -265,7 +267,7 @@
             // 
             this.txtBoxFeedUrl.Location = new System.Drawing.Point(9, 94);
             this.txtBoxFeedUrl.Name = "txtBoxFeedUrl";
-            this.txtBoxFeedUrl.Size = new System.Drawing.Size(402, 20);
+            this.txtBoxFeedUrl.Size = new System.Drawing.Size(383, 20);
             this.txtBoxFeedUrl.TabIndex = 10;
             this.txtBoxFeedUrl.TextChanged += new System.EventHandler(this.txtBoxFeedUrl_TextChanged);
             // 
@@ -378,6 +380,16 @@
             this.exitToolStripMenuItem1.Text = "Exit";
             this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(298, 61);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -443,6 +455,7 @@
         private System.Windows.Forms.MaskedTextBox txtBoxPassword;
         private System.Windows.Forms.ToolStripMenuItem menuItemStartMinimized;
         private System.Windows.Forms.Button btnExecute;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -16,11 +16,11 @@ namespace KtuvitRssDownloader.RssPareserAndDownloader
         const string subtitleDownloadUrl = @"http://www.ktuvit.com/downloadsubtitle.php?id={0}";
         const string loginUrl = @"http://www.ktuvit.com/login.php";
         private CookieCollection _cookies = null;
-        //TODO - read dir from config
+
         private readonly string Dir = Utils.AppSettingsUtil.ReadFromSettings("SaveDir");
-        public void Download(string id, string fileName)
+        public string Download(string id, string fileName)
         {
-            _log.Debug(this.GetType().Name, string.Format("Going to download file :{0}", string.Format(subtitleDownloadUrl, id)));
+            _log.Debug(string.Format("Going to download file :{0}", string.Format(subtitleDownloadUrl, id)));
             if (_cookies == null)
                 _cookies = DoLogin();
             var request = (HttpWebRequest)WebRequest.Create(string.Format(subtitleDownloadUrl, id));
@@ -47,8 +47,8 @@ namespace KtuvitRssDownloader.RssPareserAndDownloader
             }
             catch (Exception e)
             {
-                _log.Error(this.GetType().Name, string.Format("Failed to download file with error {0}", e.Message));
-                return;
+                _log.Error(string.Format("Failed to download file with error {0}", e.Message));
+                return "";
             }
             
             
@@ -59,13 +59,13 @@ namespace KtuvitRssDownloader.RssPareserAndDownloader
             }
             catch(Exception e)
             {
-                _log.Error(this.GetType().Name, string.Format("Failed to create directory with error {0}", e.Message));
+                _log.Error(string.Format("Failed to create directory with error {0}", e.Message));
                 response.Close();
-                return;
+                return "";
             }
             
             var newFileName = Path.Combine(Dir, fileNameFromResponse);
-            _log.Debug(this.GetType().Name, string.Format("Going to save downloaded file to :{0}", newFileName));
+            _log.Debug(string.Format("Going to save downloaded file to :{0}", newFileName));
             if (File.Exists(newFileName))
             {
                 File.Delete(newFileName);
@@ -86,15 +86,15 @@ namespace KtuvitRssDownloader.RssPareserAndDownloader
             }
             catch (Exception e)
             {
-                _log.Error(this.GetType().Name, string.Format("Failed to save file with error {0}", e.Message));
-                return;
+                _log.Error(string.Format("Failed to save file with error {0}", e.Message));
+                return "";
             }
             finally
             {
                 response.Close();
             }
 
-            
+            return newFileName;
             
         }
 
@@ -106,7 +106,7 @@ namespace KtuvitRssDownloader.RssPareserAndDownloader
 
         private CookieCollection DoLogin()
         {
-            _log.Debug(this.GetType().Name, string.Format("Going to do login"));
+            _log.Debug(string.Format("Going to do login"));
             var request = (HttpWebRequest)WebRequest.Create(loginUrl);
             request.Method = "POST";
             request.CookieContainer = new CookieContainer();
@@ -144,7 +144,7 @@ namespace KtuvitRssDownloader.RssPareserAndDownloader
                 Console.WriteLine(cookie);
             }
             response.Close();
-            _log.Debug(this.GetType().Name, string.Format("Login was succesfull"));
+            _log.Debug(string.Format("Login was succesfull"));
             return ((HttpWebResponse)response).Cookies;
         }
     }
