@@ -15,8 +15,8 @@ namespace KtuvitRssDownloader.DownloadScheduler.Scheduler
         {
             if(_timer == null)
             {
-                _timer = new Timer(5000);
-               // _timer.Interval = TimeSpan.FromHours(GetIntervalFromConfig()).TotalMilliseconds;
+                _timer = new Timer();
+                _timer.Interval = TimeSpan.FromHours(GetIntervalFromConfig()).TotalMilliseconds;
                 _timer.AutoReset = true;
                 _timer.Elapsed += TriggerJob;
                 _lastExecutionTime = DateTime.Now;
@@ -36,11 +36,9 @@ namespace KtuvitRssDownloader.DownloadScheduler.Scheduler
 
         private void TriggerJob(object sender, ElapsedEventArgs e)
         {
-            _timer.Stop();
             _lastExecutionTime = DateTime.Now;
             var job = new SimpleJob();
             job.Execute();
-            //ResetTimer();
         }
 
         public override void StopScheduler()
